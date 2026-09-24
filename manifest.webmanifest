@@ -1,0 +1,14 @@
+{
+  "name": "SignAR - Filipino Sign Language Recognition & AR Learning",
+  "short_name": "SignAR",
+  "description": "Real-time Filipino Sign Language recognition, AR visualization, sign-to-text, digital learning chart, and speech.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f7f8fa",
+  "theme_color": "#f7f8fa",
+  "icons": [
+    {"src":"icons/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}

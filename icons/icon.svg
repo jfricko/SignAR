@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs><linearGradient id="g" x1="0" x2="1"><stop stop-color="#6ee7b7"/><stop offset="1" stop-color="#38bdf8"/></linearGradient></defs>
+  <rect width="512" height="512" rx="112" fill="#07111f"/>
+  <rect x="56" y="56" width="400" height="400" rx="92" fill="url(#g)"/>
+  <text x="256" y="310" text-anchor="middle" font-family="Arial, sans-serif" font-size="172" font-weight="900" fill="#07111f">SA</text>
+</svg>

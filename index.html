@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f7f8fa" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="description" content="SignAR: real-time recognition and augmented reality visualization of Filipino Sign Language for interactive learning and communication." />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="icons/icon.svg" />
+  <link rel="stylesheet" href="style.css" />
+  <title>SignAR | Filipino Sign Language Recognition & AR</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">SA</div>
+        <div><h1>SignAR</h1><p>Real-time recognition and augmented reality visualization of Filipino Sign Language</p></div>
+      </div>
+      <div class="top-actions">
+        <button class="secondary-btn install-btn" id="installBtn" hidden>Install app</button>
+        <div class="status-pill" id="cameraStatus"><span></span> Camera off</div>
+      </div>
+    </header>
+
+    <nav class="main-nav" aria-label="SignAR sections">
+      <button class="nav-btn active" data-target="recognizeSection">Recognize</button>
+      <button class="nav-btn" data-target="aboutSection">About SignAR</button>
+    </nav>
+
+    <main>
+      <section id="recognizeSection" class="page-section active-section">
+        <div class="intro-banner card">
+          <div>
+            <span class="eyebrow">FILIPINO SIGN LANGUAGE LEARNING TOOL</span>
+            <h2>Recognize, understand, and practice FSL in real time.</h2>
+            <p>SignAR uses the device camera, computer vision, landmark-based recognition, and AR-style visual feedback to support interactive Filipino Sign Language learning.</p>
+          </div>
+          <div class="feature-chips">
+            <span>📷 Camera</span><span>✋ Hand tracking</span><span>✨ AR feedback</span><span>🔊 Voice</span>
+          </div>
+        </div>
+
+        <div class="dashboard">
+          <section class="camera-card card">
+            <div class="section-heading">
+              <div><span class="eyebrow">FILIPINO SIGN LANGUAGE</span><h2>Live AR recognition</h2></div>
+              <button class="secondary-btn" id="switchCameraBtn">Use back camera</button>
+            </div>
+
+            <div class="camera-stage" id="cameraStage">
+              <video id="video" autoplay playsinline muted></video>
+              <canvas id="handCanvas" class="hand-canvas"></canvas>
+              <div class="ar-overlay" id="arOverlay">
+                <div class="ar-title">FSL</div>
+                <div class="ar-sign" id="arSign">Waiting for a sign</div>
+                <div class="ar-meaning" id="arMeaning">Show a supported Filipino Sign Language gesture.</div>
+              </div>
+              <div class="tracking-badge" id="trackingBadge">HANDS: SEARCHING</div>
+              <div class="camera-placeholder" id="cameraPlaceholder">
+                <div class="hand-icon">🤟</div>
+                <h3>Ready for FSL recognition</h3>
+                <p>Start the camera, place your hand or hands clearly in view, and make a supported Filipino Sign Language gesture.</p>
+              </div>
+              <div class="scan-frame"><span></span><span></span><span></span><span></span></div>
+              <div class="live-badge" id="liveBadge">AR LIVE</div>
+            </div>
+
+            <div class="camera-actions">
+              <button class="primary-btn" id="startCameraBtn">Start camera</button>
+              <button class="secondary-btn" id="fullscreenBtn">Fullscreen AR</button>
+              <button class="danger-btn" id="stopCameraBtn" disabled>Stop</button>
+            </div>
+            <p class="privacy-note">Camera frames are processed in the browser for this prototype. No recognition history is stored by the interface.</p>
+          </section>
+
+          <aside class="result-column">
+            <section class="result-card card">
+              <span class="eyebrow">REAL-TIME RECOGNITION</span>
+              <div class="recognition-state" id="recognitionState">SEARCHING</div>
+              <div class="result-label">Detected FSL sign</div>
+              <div class="detected-sign" id="detectedSign">Waiting...</div>
+              <div class="confidence-row"><span>Confidence</span><strong id="confidenceValue">0%</strong></div>
+              <div class="progress"><div id="confidenceBar"></div></div>
+              <div class="translation-box"><span>Speech / meaning</span><strong id="translationText">No sign detected yet.</strong></div>
+              <div class="type-pill" id="typePill">Automatic</div>
+            </section>
+
+            <section class="sentence-card card">
+              <div class="section-heading compact">
+                <div><span class="eyebrow">TEXT + VOICE</span><h3>Live sentence</h3></div>
+                <button class="icon-btn" id="speakBtn" title="Speak sentence" aria-label="Speak sentence">🔊</button>
+              </div>
+              <div class="sentence-block">
+                <span class="sentence-label">Recognized signs</span>
+                <div class="raw-output" id="rawOutput">No confirmed gestures yet.</div>
+              </div>
+              <div class="sentence-block clean-block">
+                <span class="sentence-label">Combined sentence</span>
+                <div class="sentence-output" id="sentenceOutput">Make one sign, hold it steady, then relax your hand before the next sign.</div>
+              </div>
+              <div class="sentence-actions">
+                <button class="secondary-btn" id="deleteBtn">Delete</button>
+                <button class="secondary-btn" id="clearSentenceBtn">Clear</button>
+              </div>
+              <div class="voice-controls">
+                <label class="voice-language" for="voiceLanguage"><span>Voice language</span>
+                  <select id="voiceLanguage"><option value="fil" selected>Filipino</option><option value="en">English</option></select>
+                </label>
+                <label class="speech-toggle"><input type="checkbox" id="autoSpeakToggle" checked /> <span>Speak sign when detected</span></label>
+              </div>
+              <div class="model-note"><strong>Supported prototype vocabulary</strong><span> Kumusta, Salamat, Oo, Hindi, Tulong, Mahal Kita, Pakiusap, Paumanhin, Tigil, Sakit, Kain, Inom, Dagdag, Paano, Ano, Saan, Kailan, Ikaw, Tayo, Mabuti and Masama. Voice output can be Filipino or English.</span></div>
+            </section>
+          </aside>
+        </div>
+      </section>
+
+      <section id="aboutSection" class="page-section">
+        <div class="about-grid">
+          <article class="info-card card"><span class="eyebrow">PROPOSED SOLUTION</span><h2>What is SignAR?</h2><p>SignAR is a digital educational tool that combines real-time Filipino Sign Language recognition with augmented-reality-style visual feedback. A device camera captures hand gestures, computer vision extracts hand landmarks, the recognition layer identifies supported gestures, and the interface displays the sign and its meaning.</p></article>
+          <article class="info-card card"><span class="eyebrow">TECHNOLOGY</span><h2>How the prototype works</h2><ul><li><strong>Mobile camera:</strong> captures hand gestures in real time.</li><li><strong>Computer vision:</strong> tracks hand landmarks and motion.</li><li><strong>Machine-learning layer:</strong> combines adaptive landmark examples with the rule-based classifier.</li><li><strong>AR visualization:</strong> places recognition feedback over the live camera.</li><li><strong>Digital sign chart:</strong> lets learners study supported signs without using the camera.</li></ul></article>
+          <article class="info-card card"><span class="eyebrow">TARGET USERS</span><h2>Who SignAR supports</h2><ul><li>K–12 and secondary students learning Filipino Sign Language.</li><li>Teachers and educators supporting inclusive classroom communication.</li><li>Deaf students who may benefit when classmates and teachers understand more FSL.</li><li>Schools and institutions promoting accessible and inclusive learning.</li></ul></article>
+          <article class="info-card card"><span class="eyebrow">EDUCATION + SOCIAL RELEVANCE</span><h2>Why it matters</h2><p>The proposal positions SignAR as an interactive learning and awareness tool intended to support inclusive education and reduce communication barriers between Deaf and non-Deaf individuals.</p><div class="sdg-list"><span>SDG 4 · Quality Education</span><span>SDG 10 · Reduced Inequalities</span><span>SDG 9 · Industry, Innovation and Infrastructure</span></div></article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1646424915/hands.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
